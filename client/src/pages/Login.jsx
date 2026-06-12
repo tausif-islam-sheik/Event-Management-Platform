@@ -4,6 +4,12 @@ import axiosInstance from '../utils/axiosInstance';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 
+const DEMO_ACCOUNTS = [
+  { label: 'Admin', email: 'admin@events.com', password: 'admin@events.com' },
+  { label: 'User', email: 'alice@example.com', password: 'alice@example.com' },
+  { label: 'Organizer', email: 'organizer@events.com', password: 'organizer@events.com' },
+];
+
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -13,15 +19,14 @@ const Login = () => {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!form.email || !form.password) {
+  const performLogin = async (email, password) => {
+    if (!email || !password) {
       toast.error('Please fill in all fields.');
       return;
     }
     setLoading(true);
     try {
-      const res = await axiosInstance.post('/auth/login', form);
+      const res = await axiosInstance.post('/auth/login', { email, password });
       login(res.data.data);
       toast.success(`Welcome back, ${res.data.data.user.name}!`);
       const role = res.data.data.user.role;
@@ -33,6 +38,16 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    performLogin(form.email, form.password);
+  };
+
+  const handleDemoLogin = (demo) => {
+    setForm({ email: demo.email, password: demo.password });
+    performLogin(demo.email, demo.password);
   };
 
   return (
@@ -106,6 +121,27 @@ const Login = () => {
               )}
             </button>
           </form>
+
+          <div className="mt-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex-1 h-px bg-slate-700/50" />
+              <span className="text-xs text-slate-500 uppercase tracking-wider">Demo login</span>
+              <div className="flex-1 h-px bg-slate-700/50" />
+            </div>
+            <div className="grid grid-cols-1 gap-2">
+              {DEMO_ACCOUNTS.map((demo) => (
+                <button
+                  key={demo.label}
+                  type="button"
+                  disabled={loading}
+                  onClick={() => handleDemoLogin(demo)}
+                  className="w-full py-2.5 px-4 rounded-xl border border-slate-700/50 bg-slate-800/40 hover:bg-slate-800/70 disabled:opacity-60 disabled:cursor-not-allowed text-slate-300 hover:text-white text-sm font-medium transition-all"
+                >
+                  {demo.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div className="mt-6 pt-6 border-t border-slate-700/50 text-center">
             <p className="text-slate-400 text-sm">

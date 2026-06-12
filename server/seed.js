@@ -16,13 +16,13 @@ const seed = async () => {
     await User.deleteMany();
     await Event.deleteMany();
     await OrganizerRequest.deleteMany();
-    console.log('🗑️  Cleared existing data');
+    console.log('Cleared existing data');
 
     // Create admin
     const admin = await User.create({
       name: 'Admin User',
       email: 'admin@events.com',
-      password: 'admin123',
+      password: 'admin@events.com',
       role: 'admin',
     });
 
@@ -30,7 +30,7 @@ const seed = async () => {
     const organizer = await User.create({
       name: 'Event Organizer',
       email: 'organizer@events.com',
-      password: 'organizer123',
+      password: 'organizer@events.com',
       role: 'organizer',
     });
 
@@ -38,15 +38,28 @@ const seed = async () => {
     const user1 = await User.create({
       name: 'Alice Johnson',
       email: 'alice@example.com',
-      password: 'user123',
+      password: 'alice@example.com',
       role: 'user',
     });
 
     const user2 = await User.create({
       name: 'Bob Smith',
       email: 'bob@example.com',
-      password: 'user123',
+      password: 'bob@example.com',
       role: 'user',
+    });
+
+    const userRequest = await User.create({
+      name: 'Pending Organizer',
+      email: 'requester@example.com',
+      password: 'requester@example.com',
+      role: 'user',
+    });
+
+    await OrganizerRequest.create({
+      userId: userRequest._id,
+      reason: 'I want to organize community tech meetups in my city.',
+      status: 'pending',
     });
 
     // Create sample events
@@ -96,16 +109,17 @@ const seed = async () => {
     event2.registeredUsers.push(user1._id, user2._id);
     await event2.save();
 
-    console.log('🌱 Seed data inserted successfully!');
-    console.log('📋 Accounts created:');
-    console.log('   Admin:     admin@events.com     / admin123');
-    console.log('   Organizer: organizer@events.com / organizer123');
-    console.log('   User 1:    alice@example.com    / user123');
-    console.log('   User 2:    bob@example.com      / user123');
+    console.log('Seed data inserted successfully!');
+    console.log('Accounts created:');
+    console.log('   Admin:     admin@events.com     / admin@events.com');
+    console.log('   Organizer: organizer@events.com / organizer@events.com');
+    console.log('   User 1:    alice@example.com    / alice@example.com');
+    console.log('   User 2:    bob@example.com      / bob@example.com');
+    console.log('   Request:   requester@example.com / requester@example.com (pending organizer request)');
 
     process.exit(0);
   } catch (error) {
-    console.error('❌ Seed error:', error.message);
+    console.error('Seed error:', error.message);
     process.exit(1);
   }
 };
