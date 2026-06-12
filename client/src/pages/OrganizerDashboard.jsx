@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../utils/axiosInstance';
 import useAuth from '../hooks/useAuth';
-import { uploadImage } from '../utils/firebase';
+import { uploadImage } from '../utils/uploadImage';
 import toast from 'react-hot-toast';
 
 const CATEGORIES = ['tech', 'music', 'sports', 'education', 'other'];
