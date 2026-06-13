@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 const DEMO_ACCOUNTS = [
   { label: 'Admin', email: 'admin@events.com', password: 'admin@events.com' },
-  { label: 'User', email: 'alice@example.com', password: 'alice@example.com' },
+  { label: 'User', email: 'bob@example.com', password: 'bob@example.com' },
   { label: 'Organizer', email: 'organizer@events.com', password: 'organizer@events.com' },
 ];
 
