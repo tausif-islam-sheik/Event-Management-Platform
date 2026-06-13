@@ -5,12 +5,12 @@ import EventCard from '../components/EventCard';
 const CATEGORIES = ['all', 'tech', 'music', 'sports', 'education', 'other'];
 
 const categoryLabels = {
-  all: '✨ All',
-  tech: '💻 Tech',
-  music: '🎵 Music',
-  sports: '🏆 Sports',
-  education: '📚 Education',
-  other: '🎪 Other',
+  all: 'All',
+  tech: 'Tech',
+  music: 'Music',
+  sports: 'Sports',
+  education: 'Education',
+  other: 'Other',
 };
 
 const Home = () => {
@@ -81,7 +81,9 @@ const Home = () => {
                 onClick={() => setSearch('')}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
               >
-                ✕
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             )}
           </div>
@@ -135,7 +137,11 @@ const Home = () => {
           </div>
         ) : events.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 text-center">
-            <div className="text-6xl mb-4">🔍</div>
+            <div className="w-16 h-16 mb-4 rounded-full bg-slate-800 flex items-center justify-center">
+              <svg className="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
             <h3 className="text-white text-xl font-semibold mb-2">No events found</h3>
             <p className="text-slate-400">Try adjusting your search or filter criteria.</p>
             <button

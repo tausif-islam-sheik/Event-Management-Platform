@@ -5,10 +5,10 @@ import toast from 'react-hot-toast';
 const TABS = ['stats', 'requests', 'users', 'events'];
 
 const tabLabels = {
-  stats: '📊 Stats',
-  requests: '📋 Requests',
-  users: '👥 Users',
-  events: '🎪 Events',
+  stats: 'Stats',
+  requests: 'Requests',
+  users: 'Users',
+  events: 'Events',
 };
 
 const roleBadge = {
@@ -152,13 +152,49 @@ const AdminDashboard = () => {
             <h1 className="text-2xl font-bold text-white mb-8">Platform Statistics</h1>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {[
-                { label: 'Total Users', value: stats.totalUsers, icon: '👤', color: 'from-blue-500/20 to-blue-600/10 border-blue-500/30' },
-                { label: 'Organizers', value: stats.totalOrganizers, icon: '🎯', color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30' },
-                { label: 'Total Events', value: stats.totalEvents, icon: '🎪', color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30' },
-                { label: 'Pending Requests', value: stats.pendingRequests, icon: '⏳', color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30' },
+                {
+                  label: 'Total Users',
+                  value: stats.totalUsers,
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  ),
+                  color: 'from-blue-500/20 to-blue-600/10 border-blue-500/30 text-blue-400',
+                },
+                {
+                  label: 'Organizers',
+                  value: stats.totalOrganizers,
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  ),
+                  color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 text-emerald-400',
+                },
+                {
+                  label: 'Total Events',
+                  value: stats.totalEvents,
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  ),
+                  color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 text-purple-400',
+                },
+                {
+                  label: 'Pending Requests',
+                  value: stats.pendingRequests,
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ),
+                  color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 text-orange-400',
+                },
               ].map((stat) => (
                 <div key={stat.label} className={`bg-gradient-to-br ${stat.color} border rounded-2xl p-6`}>
-                  <div className="text-3xl mb-2">{stat.icon}</div>
+                  <div className={`mb-3 ${stat.color.split(' ').find(c => c.startsWith('text-'))}`}>{stat.icon}</div>
                   <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
                   <div className="text-sm text-slate-400">{stat.label}</div>
                 </div>
@@ -266,9 +302,25 @@ const AdminDashboard = () => {
                     <div className="flex-1 min-w-0">
                       <h3 className="text-white font-semibold truncate">{event.title}</h3>
                       <div className="flex flex-wrap gap-3 mt-1 text-xs text-slate-500">
-                        <span>📅 {new Date(event.date).toLocaleDateString()}</span>
-                        <span>📍 {event.location}</span>
-                        <span>👤 {event.organizerId?.name || 'Unknown organizer'}</span>
+                        <span className="flex items-center gap-1">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          {new Date(event.date).toLocaleDateString()}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          {event.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                          {event.organizerId?.name || 'Unknown organizer'}
+                        </span>
                         <span className="capitalize px-2 py-0.5 rounded-full bg-slate-700/60">{event.category}</span>
                       </div>
                     </div>
